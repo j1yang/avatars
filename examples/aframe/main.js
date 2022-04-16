@@ -22,6 +22,7 @@ AFRAME.registerComponent('avatar', {
   loadModel: async function () {
     const model = await new Promise((res, rej) => {
       new THREE.GLTFLoader().load(this.data.modelName, gltf => {
+        gltf.frustumCulled = false;
         const meshes = gltf.scene.children[0].children;
         meshes.forEach(o => {
           if (o.type === 'SkinnedMesh') {
