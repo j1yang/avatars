@@ -4,25 +4,24 @@
   "description": "Exokit Avatars",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "image-size": "^0.7.4",
-    "sharp": "^0.23.0",
-    "window-fetch": "0.0.13"
+    "@pixiv/three-vrm": "^0.6.11",
+    "three": "^0.137.4"
   },
   "scripts": {
-    "start": "sudo $(which node) index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/exokitxr/avatars.git"
+    "url": "git+https://github.com/msub2/avatars.git"
   },
-  "author": "Avaer Kazmer <a@modules.io>",
+  "authors": "Avaer Kazmer <a@modules.io>, Daniel Adams <msub2official@gmail.com",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/exokitxr/avatars/issues"
   },
-  "homepage": "https://github.com/exokitxr/avatars#readme"
+  "homepage": "https://github.com/exokitxr/avatars#readme",
+  "devDependencies": {
+    "vite": "^2.9.5"
+  },
+  "type": "module"
 }
