@@ -1,4 +1,6 @@
-import './vrarmik/three-vrm.js';
+//import './vrarmik/three-vrm.js';
+import * as THREE from 'three';
+import { VRMSpringBoneImporter } from 'https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@0.6.0/lib/three-vrm.module.js';
 import {fixSkeletonZForward} from './vrarmik/SkeletonUtils.js';
 import PoseManager from './vrarmik/PoseManager.js';
 import ShoulderTransforms from './vrarmik/ShoulderTransforms.js';
@@ -594,7 +596,7 @@ class Avatar {
           };
         }
 
-        new THREE.VRMSpringBoneImporter().import(object)
+        new VRMSpringBoneImporter().import(object)
           .then(springBoneManager => {
             this.springBoneManager = springBoneManager;
           });
