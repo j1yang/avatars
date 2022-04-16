@@ -136,10 +136,10 @@
         if (controls.input.active) {
           avatar.inputs.hmd.position.copy(renderer.xr.getCamera().position);
           avatar.inputs.hmd.quaternion.copy(renderer.xr.getCamera().quaternion);
-          avatar.inputs.leftGamepad.position.copy(controls.input.right.grip.position);
-          avatar.inputs.leftGamepad.quaternion.copy(controls.input.right.grip.quaternion);
-          avatar.inputs.rightGamepad.position.copy(controls.input.left.grip.position);
-          avatar.inputs.rightGamepad.quaternion.copy(controls.input.left.grip.quaternion);
+          avatar.inputs.leftGamepad.position.copy(controls.input.left.grip.position);
+          avatar.inputs.leftGamepad.quaternion.copy(controls.input.left.grip.quaternion);
+          avatar.inputs.rightGamepad.position.copy(controls.input.right.grip.position);
+          avatar.inputs.rightGamepad.quaternion.copy(controls.input.right.grip.quaternion);
           
           avatar.setFloorHeight(0) // sets the floor height that exokit uses to determine the pose
           
