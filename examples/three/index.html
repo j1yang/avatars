@@ -99,6 +99,13 @@
       
       const model = await new Promise((res, rej) => {
         new GLTFLoader().load('../res/dan.glb', gltf => {
+          const meshes = gltf.scene.children[0].children;
+          meshes.forEach(o => {
+            if (o.type === 'SkinnedMesh') {
+              o.material.side = THREE.FrontSide;
+              o.frustumCulled = false;
+            }
+          });
           scene.add(gltf.scene);
           res(gltf);
         }, xhr => {}, rej);
@@ -124,7 +131,6 @@
 
       const controls = new Controls(renderer);
       const player = new THREE.Group();
-      player.add(avatar.model);
       player.add(camera);
       player.add(controls.controller1)
       player.add(controls.controller1Grip);
@@ -136,9 +142,9 @@
         if (controls.input.active) {
           avatar.inputs.hmd.position.copy(renderer.xr.getCamera().position);
           avatar.inputs.hmd.quaternion.copy(renderer.xr.getCamera().quaternion);
-          avatar.inputs.leftGamepad.position.copy(controls.input.left.grip.position);
+          avatar.inputs.leftGamepad.position.copy(controls.input.left.grip.position.add(player.position));
           avatar.inputs.leftGamepad.quaternion.copy(controls.input.left.grip.quaternion);
-          avatar.inputs.rightGamepad.position.copy(controls.input.right.grip.position);
+          avatar.inputs.rightGamepad.position.copy(controls.input.right.grip.position.add(player.position));
           avatar.inputs.rightGamepad.quaternion.copy(controls.input.right.grip.quaternion);
           
           avatar.setFloorHeight(0) // sets the floor height that exokit uses to determine the pose

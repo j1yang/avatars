@@ -1767,6 +1767,7 @@ class Avatar {
       this.skinnedMeshes.forEach((o2) => {
         const { morphTargetDictionary, morphTargetInfluences } = o2;
         if (morphTargetDictionary && morphTargetInfluences) {
+          console.log(o2);
           let aaMorphTargetIndex = morphTargetDictionary["vrc.v_aa"];
           if (aaMorphTargetIndex === void 0) {
             aaMorphTargetIndex = morphTargetDictionary["morphTarget26"];

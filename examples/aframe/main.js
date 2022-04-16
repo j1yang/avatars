@@ -29,7 +29,7 @@ AFRAME.registerComponent('avatar', {
             o.material.side = THREE.FrontSide;
           }
         })
-        AFRAME.scenes[0].object3D.add(gltf.scene);
+        this.player.object3D.add(gltf.scene);
         res(gltf);
       }, xhr => {}, rej);
     });
@@ -44,7 +44,6 @@ AFRAME.registerComponent('avatar', {
       muted: this.data.muted, // false to passthrough microphone audio
       debug: this.data.debug, // add debug bone geometry
     });
-    this.player.object3D.add(this.avatar.model);
   },
 
   tick: function (time, timeDelta) {
