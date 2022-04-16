@@ -40,9 +40,9 @@
       </div>
     </div>
     <script type=module>
-import 'https://unpkg.com/three@0.111.0/build/three.js';
-import 'https://unpkg.com/three@0.111.0/examples/js/controls/OrbitControls.js';
-import 'https://unpkg.com/three@0.111.0/examples/js/objects/Reflector.js';
+import 'https://unpkg.com/three@0.112.0/build/three.js';
+import 'https://unpkg.com/three@0.112.0/examples/js/controls/OrbitControls.js';
+import 'https://unpkg.com/three@0.112.0/examples/js/objects/Reflector.js';
 
 import avatarModels from 'https://avatar-models.exokit.org/avatar-models.js'
 import ModelLoader from 'https://model-loader.exokit.org/model-loader.js';
@@ -319,8 +319,8 @@ function animate(timestamp, frame, referenceSpace) {
   const timeDiff = now - lastTimestamp;
 
   if (rig) {
-    if (renderer.vr.enabled) {
-      const vrCameras = renderer.vr.getCamera(camera).cameras;
+    if (renderer.xr.enabled) {
+      const vrCameras = renderer.xr.getCamera(camera).cameras;
       const vrCamera = vrCameras[0];
       const vrCamera2 = vrCameras[1];
       vrCamera.matrixWorld.decompose(vrCamera.position, vrCamera.quaternion, vrCamera.scale);
@@ -824,7 +824,7 @@ enterXrButton.addEventListener('click', async () => {
   const loadReferenceSpaceInterval = setInterval(_loadReferenceSpace, 1000);
   
   await new Promise((accept, reject) => {
-    renderer.vr.setSession(session);
+    renderer.xr.setSession(session);
 
     let interations = 0;
     const _raf = (timestamp, frame) => {
@@ -845,9 +845,9 @@ enterXrButton.addEventListener('click', async () => {
 
         renderer.setAnimationLoop(null);
 
-        renderer.vr.enabled = true;
-        renderer.vr.setSession(session);
-        renderer.vr.setAnimationLoop(animate);
+        renderer.xr.enabled = true;
+        renderer.xr.setSession(session);
+        renderer.xr.setAnimationLoop(animate);
 
         accept();
       } else {
