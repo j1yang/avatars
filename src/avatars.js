@@ -955,7 +955,7 @@ class Avatar {
     if (this.options.fingers) {
       const _processFingerBones = left => {
         const fingerBones = left ? this.fingerBones.left : this.fingerBones.right;
-        const gamepadInput = left ? this.inputs.rightGamepad : this.inputs.leftGamepad;
+        const gamepadInput = left ? this.inputs.leftGamepad : this.inputs.rightGamepad;
         for (const k in fingerBones) {
           const fingerBone = fingerBones[k];
           if (fingerBone) {
@@ -1000,25 +1000,34 @@ class Avatar {
       this.skinnedMeshes.forEach(o => {
         const {morphTargetDictionary, morphTargetInfluences} = o;
         if (morphTargetDictionary && morphTargetInfluences) {
-          let aaMorphTargetIndex = morphTargetDictionary['vrc.v_aa'];
+          const aaMorphTest = /.*_a+(?!\w+)/i;
+          const aaMorphTarget = Object.keys(morphTargetDictionary).filter(key => aaMorphTest.test(key));
+          let aaMorphTargetIndex = morphTargetDictionary[aaMorphTarget];
           if (aaMorphTargetIndex === undefined) {
-            aaMorphTargetIndex = morphTargetDictionary['morphTarget26'];
+            // VRM-specific
+            aaMorphTargetIndex = morphTargetDictionary[26];
           }
           if (aaMorphTargetIndex !== undefined) {
             morphTargetInfluences[aaMorphTargetIndex] = aaValue;
           }
 
-          let blinkLeftMorphTargetIndex = morphTargetDictionary['vrc.blink_left'];
+          const blinkLeftMorphTest = /.*blink_*l(?:eft)*/i;
+          const blinkLeftMorphTarget = Object.keys(morphTargetDictionary).filter(key => blinkLeftMorphTest.test(key));
+          let blinkLeftMorphTargetIndex = morphTargetDictionary[blinkLeftMorphTarget];
           if (blinkLeftMorphTargetIndex === undefined) {
-            blinkLeftMorphTargetIndex = morphTargetDictionary['morphTarget16'];
+            // VRM-specific
+            blinkLeftMorphTargetIndex = morphTargetDictionary[16];
           }
           if (blinkLeftMorphTargetIndex !== undefined) {
             morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
           }
 
-          let blinkRightMorphTargetIndex = morphTargetDictionary['vrc.blink_right'];
+          const blinkRightMorphTest = /.*blink_*r(?:ight)*/i;
+          const blinkRightMorphTarget = Object.keys(morphTargetDictionary).filter(key => blinkRightMorphTest.test(key));
+          let blinkRightMorphTargetIndex = morphTargetDictionary[blinkRightMorphTarget];
           if (blinkRightMorphTargetIndex === undefined) {
-            blinkRightMorphTargetIndex = morphTargetDictionary['morphTarget17'];
+            // VRM-specific
+            blinkRightMorphTargetIndex = morphTargetDictionary[17];
           }
           if (blinkRightMorphTargetIndex !== undefined) {
             morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
