@@ -1100,4 +1100,5 @@ class Avatar {
     this.setMicrophoneMediaStream(null);
   }
 }
+window.Avatar = Avatar;
 export default Avatar;
