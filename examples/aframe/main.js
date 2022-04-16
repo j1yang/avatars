@@ -27,8 +27,9 @@ AFRAME.registerComponent('avatar', {
         meshes.forEach(o => {
           if (o.type === 'SkinnedMesh') {
             o.material.side = THREE.FrontSide;
+            o.frustumCulled = false;
           }
-        })
+        });
         this.player.object3D.add(gltf.scene);
         res(gltf);
       }, xhr => {}, rej);
