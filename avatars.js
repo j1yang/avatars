@@ -1,4 +1,3 @@
-//import './vrarmik/three-vrm.js';
 import * as THREE from 'three';
 import { VRMSpringBoneImporter } from 'https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@0.6.11/lib/three-vrm.module.js';
 import {fixSkeletonZForward} from './vrarmik/SkeletonUtils.js';
@@ -502,7 +501,7 @@ class Avatar {
     const flipY = armatureDirection.z < -0.5;
     const legDirection = new THREE.Vector3(0, 0, -1).applyQuaternion(Left_leg.getWorldQuaternion(new THREE.Quaternion()).premultiply(armature.quaternion.clone().invert()));
     const flipLeg = legDirection.y < 0.5;
-	  console.log('flip', flipZ, flipY, flipLeg);
+	  console.log(`flipZ: ${flipZ}, flipY: ${flipY}, flipLeg: ${flipLeg}`);
 	  this.flipZ = flipZ;
 	  this.flipY = flipY;
     this.flipLeg = flipLeg;
@@ -864,6 +863,7 @@ class Avatar {
     this.volume = 0;
     this.setMicrophoneMediaStream(options.microphoneMediaStream, {
       muted: options.muted,
+      microphoneWorkletUrl: options.microphoneWorkletUrl
     });
 
     this.lastTimestamp = Date.now();
@@ -1055,6 +1055,8 @@ class Avatar {
   decapitate() {
     if (!this.decapitated) {
       this.modelBones.Head.traverse(o => {
+        // Hitting a vrm collidersphere will break this
+        if (!o.savedPosition || !o.savedMatrixWorld) return;
         o.savedPosition.copy(o.position);
         o.savedMatrixWorld.copy(o.matrixWorld);
         o.position.set(NaN, NaN, NaN);
@@ -1072,6 +1074,8 @@ class Avatar {
   undecapitate() {
     if (this.decapitated) {
       this.modelBones.Head.traverse(o => {
+        // Hitting a vrm collidersphere will break this
+        if (!o.savedPosition || !o.savedMatrixWorld) return;
         o.position.copy(o.savedPosition);
         o.matrixWorld.copy(o.savedMatrixWorld);
       });
