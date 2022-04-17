@@ -147,6 +147,13 @@
           avatar.inputs.rightGamepad.position.copy(controls.input.right.grip.position.add(player.position));
           avatar.inputs.rightGamepad.quaternion.copy(controls.input.right.grip.quaternion);
           
+          if (controls.input.left.buttons.length > 0 && controls.input.right.buttons.length > 0) {
+            avatar.inputs.leftGamepad.pointer = controls.input.left.buttons[0].value;
+            avatar.inputs.leftGamepad.grip = controls.input.left.buttons[1].value;
+            avatar.inputs.rightGamepad.pointer = controls.input.right.buttons[0].value;
+            avatar.inputs.rightGamepad.grip = controls.input.right.buttons[1].value;
+          }
+          
           avatar.setFloorHeight(0) // sets the floor height that exokit uses to determine the pose
           
           avatar.update();

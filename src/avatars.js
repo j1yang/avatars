@@ -501,7 +501,7 @@ class Avatar {
     const flipY = armatureDirection.z < -0.5;
     const legDirection = new THREE.Vector3(0, 0, -1).applyQuaternion(Left_leg.getWorldQuaternion(new THREE.Quaternion()).premultiply(armature.quaternion.clone().invert()));
     const flipLeg = legDirection.y < 0.5;
-	  console.log(`flipZ: ${flipZ}, flipY: ${flipY}, flipLeg: ${flipLeg}`);
+	  //console.log(`flipZ: ${flipZ}, flipY: ${flipY}, flipLeg: ${flipLeg}`);
 	  this.flipZ = flipZ;
 	  this.flipY = flipY;
     this.flipLeg = flipLeg;
@@ -616,7 +616,11 @@ class Avatar {
             return bLeftBalance - aLeftBalance;
           }
         });
-      const fingerRootBone = fingerTipBone.length > 0 ? _findFurthestParentBone(fingerTipBone[0], bone => r.test(bone.name)) : null;
+      let fingerRootBone = fingerTipBone.length > 0 ? _findFurthestParentBone(fingerTipBone[0], bone => r.test(bone.name)) : null;
+      // FIXME: There's a really strange issue where only every other bone
+      // will pass the regex test, e.g. RightHandPinky2 paases but not RightHandPinky1.
+      // Definitely needs to be fixed, but this should hold up for now.
+      if (fingerRootBone?.parent) fingerRootBone = fingerRootBone.parent;
       return fingerRootBone;
     };
     const fingerBones = {

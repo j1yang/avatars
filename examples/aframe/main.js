@@ -8,7 +8,7 @@ AFRAME.registerComponent('avatar', {
     decapitate: { type: 'bool', default: false },
     visemes: { type: 'bool', default: true },
     muted: { type: 'bool', default: true },
-    debug: { type: 'bool', default: true },
+    debug: { type: 'bool', default: false },
   },
 
   init: function () {
@@ -16,6 +16,22 @@ AFRAME.registerComponent('avatar', {
     this.head = document.querySelector('#head');
     this.leftHand = document.querySelector('#leftHand');
     this.rightHand = document.querySelector('#rightHand');
+
+    // Use Mutation Observers to catch tracked-controls-webxr being set
+    this.leftHandControls;
+    const leftWatcher = new MutationObserver(() => {
+      this.leftHandControls = this.leftHand.components['tracked-controls-webxr'];
+      leftWatcher.disconnect();
+    });
+    leftWatcher.observe(this.leftHand, { attributes: true });
+
+    this.rightHandControls;
+    const rightWatcher = new MutationObserver(() => {
+      this.rightHandControls = this.leftHand.components['tracked-controls-webxr'];
+      rightWatcher.disconnect();
+    });
+    rightWatcher.observe(this.rightHand, { attributes: true });
+
     this.loadModel();
   },
 
@@ -29,8 +45,8 @@ AFRAME.registerComponent('avatar', {
             o.material.side = THREE.FrontSide;
             o.frustumCulled = false;
           }
-        });
-        this.player.object3D.add(gltf.scene);
+        })
+        AFRAME.scenes[0].object3D.add(gltf.scene);
         res(gltf);
       }, xhr => {}, rej);
     });
@@ -49,12 +65,24 @@ AFRAME.registerComponent('avatar', {
 
   tick: function (time, timeDelta) {
     if (!this.avatar) return;
-    this.avatar.inputs.hmd.position.copy(this.head.object3D.position); // or, get pose from WebXR
+
+    const playerOffset = this.player.object3D.position;
+    this.avatar.inputs.hmd.position.copy(this.head.object3D.position.add(playerOffset));
     this.avatar.inputs.hmd.quaternion.copy(this.head.object3D.quaternion);
-    this.avatar.inputs.leftGamepad.position.copy(this.leftHand.object3D.position);
+    this.avatar.inputs.leftGamepad.position.copy(this.leftHand.object3D.position.add(playerOffset));
     this.avatar.inputs.leftGamepad.quaternion.copy(this.leftHand.object3D.quaternion);
-    this.avatar.inputs.rightGamepad.position.copy(this.rightHand.object3D.position);
+    this.avatar.inputs.rightGamepad.position.copy(this.rightHand.object3D.position.add(playerOffset));
     this.avatar.inputs.rightGamepad.quaternion.copy(this.rightHand.object3D.quaternion);
+
+    if (this.leftHandControls.buttonStates[0]) {
+      this.avatar.inputs.leftGamepad.pointer = this.leftHandControls.buttonStates[0].value;
+      this.avatar.inputs.leftGamepad.grip = this.leftHandControls.buttonStates[1].value;
+    }
+    
+    if (this.rightHandControls.buttonStates[0]) {
+      this.avatar.inputs.rightGamepad.pointer = this.rightHandControls.buttonStates[0].value;
+      this.avatar.inputs.rightGamepad.grip = this.rightHandControls.buttonStates[1].value;
+    }
 
     this.avatar.setFloorHeight(0) // sets the floor height that exokit uses to determine the pose
  

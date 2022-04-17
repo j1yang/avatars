@@ -17,10 +17,10 @@
       <a-plane id="ground" rotation="-90 0 0" color="green" height="10" width="10"></a-plane>
       <a-light type="directional" intensity="0.5"></a-light>
       <a-light type="ambient" intensity="0.5"></a-light>
-      <a-entity avatar="modelName: ../res/dan.glb" rotation="0 0 0"></a-entity>
+      <a-entity avatar="modelName: ../res/dan.glb"></a-entity>
       <a-entity position="0 1 -1"
                 geometry="primitive: plane; width: 2; height: 2" 
-                aframe-mirror="textureWidth: 1024; textureHeight: 1024"></a-entity>
+                aframe-mirror="textureWidth: 1024; textureHeight: 1024; color: #7f7f7f"></a-entity>
       <a-entity id="player">
         <a-entity id="headOffset" position="0 0 0">
           <a-camera id="head" near="0.1" wasd-controls look-controls></a-camera>
