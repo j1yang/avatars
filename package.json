@@ -14,12 +14,12 @@
     "type": "git",
     "url": "git+https://github.com/msub2/avatars.git"
   },
-  "authors": "Avaer Kazmer <a@modules.io>, Daniel Adams <msub2official@gmail.com",
+  "authors": "Avaer Kazmer <a@modules.io>, Daniel Adams <msub2official@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/exokitxr/avatars/issues"
+    "url": "https://github.com/msub2/avatars/issues"
   },
-  "homepage": "https://github.com/exokitxr/avatars#readme",
+  "homepage": "https://github.com/msub2/avatars#readme",
   "devDependencies": {
     "vite": "^2.9.5"
   },
