@@ -2,7 +2,7 @@
   "name": "exokit-avatars",
   "version": "0.0.1",
   "description": "Exokit Avatars",
-  "main": "index.js",
+  "main": "dist/avatars.module.js",
   "dependencies": {
     "@pixiv/three-vrm": "^0.6.11",
     "three": "^0.137.4"
