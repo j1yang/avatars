@@ -5,7 +5,7 @@
     <script type="importmap">
       {
         "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.139.2/build/three.module.js"
+          "three": "https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.js"
         }
       }
     </script>
@@ -13,11 +13,11 @@
   </head>
   <body>
     <script type="module" defer>
-      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.139.2/build/three.module.js';
-      import { VRButton } from 'https://cdn.jsdelivr.net/npm/three@0.139.2/examples/jsm/webxr/VRButton.js';
-      import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.139.2/examples/jsm/loaders/GLTFLoader.js';
-      import { EXRLoader } from 'https://cdn.jsdelivr.net/npm/three@0.139.2/examples/jsm/loaders/EXRLoader.js';
-      import { Reflector } from 'https://cdn.jsdelivr.net/npm/three@0.139.2/examples/jsm/objects/Reflector.js';
+      import * as THREE from 'three';
+      import { VRButton } from 'https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/webxr/VRButton.js';
+      import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/GLTFLoader.js';
+      import { EXRLoader } from 'https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/EXRLoader.js';
+      import { Reflector } from 'https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/objects/Reflector.js';
       import Avatar from '../../dist/avatars.module.js';
       import Controls from './controls.js';
       
@@ -98,7 +98,7 @@
       }
       
       const model = await new Promise((res, rej) => {
-        new GLTFLoader().load('../res/dan.glb', gltf => {
+        new GLTFLoader().load('../res/avatar.glb', gltf => {
           const meshes = gltf.scene.children[0].children;
           meshes.forEach(o => {
             if (o.type === 'SkinnedMesh') {
