@@ -48,24 +48,48 @@
       ground.rotateX(THREE.MathUtils.degToRad(-90));
       scene.add(ground);
 
+      // +y mirror
       const reflector = new Reflector(new THREE.PlaneBufferGeometry(2, 2),
       {
           color: new THREE.Color(0x7f7f7f),
           textureWidth: window.innerWidth * window.devicePixelRatio,
           textureHeight: window.innerHeight * window.devicePixelRatio
       });
-      reflector.position.set(0, 1, -1);
+      reflector.position.set(0, 1, -2);
       scene.add(reflector);
+
+      // -y mirror
       const reflector2 = new Reflector(new THREE.PlaneBufferGeometry(2, 2),
       {
           color: new THREE.Color(0x7f7f7f),
           textureWidth: window.innerWidth * window.devicePixelRatio,
           textureHeight: window.innerHeight * window.devicePixelRatio
       });
-      reflector2.position.set(0, 1, -1.1);
+      reflector2.position.set(0, 1, 4);
       reflector2.rotateY(Math.PI);
       scene.add(reflector2);
 
+      // -x mirror
+      const reflector3 = new Reflector(new THREE.PlaneBufferGeometry(2, 2),
+      {
+          color: new THREE.Color(0x7f7f7f),
+          textureWidth: window.innerWidth * window.devicePixelRatio,
+          textureHeight: window.innerHeight * window.devicePixelRatio
+      });
+      reflector3.position.set(-1.5, 1, -1.12);
+      reflector3.rotateY(Math.PI/3);
+      scene.add(reflector3);
+
+      // x mirror
+      const reflector4 = new Reflector(new THREE.PlaneBufferGeometry(2, 2),
+      {
+          color: new THREE.Color(0x7f7f7f),
+          textureWidth: window.innerWidth * window.devicePixelRatio,
+          textureHeight: window.innerHeight * window.devicePixelRatio
+      });
+      reflector4.position.set(1.5, 1, -1.12);
+      reflector4.rotateY(-Math.PI/3);
+      scene.add(reflector4);
       document.body.appendChild(VRButton.createButton(renderer));
       renderer.xr.enabled = true;
 
