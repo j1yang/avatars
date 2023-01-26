@@ -419,6 +419,7 @@ const localQuaternion2$2 = new THREE.Quaternion();
 const localQuaternion3$2 = new THREE.Quaternion();
 const localEuler$2 = new THREE.Euler();
 new THREE.Euler();
+const frontQuaternion = new THREE.Quaternion(0, 1, 0, 0);
 class ShoulderPoser {
   constructor(rig, shoulder) {
     this.rig = rig;
@@ -440,7 +441,8 @@ class ShoulderPoser {
   }
   updateHips() {
     const hmdRotation = localQuaternion$2.copy(this.vrTransforms.head.quaternion).multiply(z180Quaternion$1);
-    const hmdEuler = localEuler$2.setFromQuaternion(hmdRotation, "YXZ");
+    const hmdQuaternion = frontQuaternion;
+    const hmdEuler = localEuler$2.setFromQuaternion(hmdQuaternion, "YXZ");
     hmdEuler.x = 0;
     hmdEuler.z = 0;
     const hmdXYRotation = localQuaternion2$2.setFromEuler(hmdEuler);
