@@ -3,8 +3,10 @@ import {Helpers} from './Unity.js';
 
 const zeroVector = new THREE.Vector3();
 const forwardVector = new THREE.Vector3(0, 0, 1);
+
 const leftRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI/2);
 const rightRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI/2);
+
 const bankLeftRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI/2);
 const bankRightRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -Math.PI/2);
 const z180Quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
@@ -19,16 +21,17 @@ const localQuaternion = new THREE.Quaternion();
 const localQuaternion2 = new THREE.Quaternion();
 const localQuaternion3 = new THREE.Quaternion();
 const localEuler = new THREE.Euler();
+
 const localMatrix = new THREE.Matrix4();
 
 	class VRArmIK
 	{
 		constructor(arm, shoulder, shoulderPoser, target, left) {
-			this.arm = arm;
+			this.arm = arm;	//left arm or right arm
 			this.shoulder = shoulder;
 			this.shoulderPoser = shoulderPoser;
-			this.target = target;
-			this.left = left;
+			this.target = target;	//shoulderPoser.vrTransforms.leftHand or.rightHand
+			this.left = left;	//is left? true/false
 
 			this.upperArmLength = 0;
 			this.lowerArmLength = 0;

@@ -122,7 +122,7 @@
       }
       
       const model = await new Promise((res, rej) => {
-        new GLTFLoader().load('../res/avatar.glb', gltf => {
+        new GLTFLoader().load('../res/avatar_shirt.glb', gltf => {
           const meshes = gltf.scene.children[0].children;
           meshes.forEach(o => {
             if (o.type === 'SkinnedMesh') {
