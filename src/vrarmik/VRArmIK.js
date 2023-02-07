@@ -55,8 +55,10 @@ const localMatrix = new THREE.Matrix4();
       const handPosition = localVector2.copy(this.target.position);
 
       const shoulderRotation = Helpers.getWorldQuaternion(this.shoulder.transform, localQuaternion);
+			console.log(shoulderRotation)
       const shoulderRotationInverse = localQuaternion2.copy(shoulderRotation).invert();
-
+			console.log(shoulderRotationInverse)
+			console.log(' ')
       const hypotenuseDistance = this.upperArmLength;
 	    const directDistance = upperArmPosition.distanceTo(handPosition) / 2;
       const offsetDistance = hypotenuseDistance > directDistance ? Math.sqrt(hypotenuseDistance*hypotenuseDistance - directDistance*directDistance) : 0;
