@@ -29,6 +29,7 @@ class ShoulderTransforms
 			this.transform.add(this.leftShoulderAnchor);
 			this.rightShoulderAnchor = new THREE.Object3D();
 			this.transform.add(this.rightShoulderAnchor);
+
 			this.leftArm = new ArmTransforms();
 			this.rightArm = new ArmTransforms();
 
