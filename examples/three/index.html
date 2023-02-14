@@ -131,9 +131,11 @@
             }
           });
           scene.add(gltf.scene);
+          
           res(gltf);
         }, xhr => {}, rej);
       });
+
       
       const microphoneMediaStream = await navigator.mediaDevices.getUserMedia({audio: true});
       const avatar = new Avatar(model, { // model is the gltf object that includes the scene, can use https://github.com/exokitxr/model-loader
