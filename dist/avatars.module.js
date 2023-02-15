@@ -550,8 +550,14 @@ class VRArmIK {
     const upperArmPosition = Helpers.getWorldPosition(this.arm.upperArm, localVector$2);
     const handRotation = this.target.quaternion;
     let handPosition = localVector2$1.copy(this.target.position);
+    const tYResValue = 0.03;
     if (this.target.position.y > this.shoulder.shoulderPoser.vrTransforms.head.position.y) {
-      this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + 0.03;
+      this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + tYResValue;
+      handPosition = localVector2$1.copy(this.target.position);
+    }
+    const bZResValue = 0.01;
+    if (this.target.position.z > this.shoulder.shoulderPoser.vrTransforms.head.position.z) {
+      this.target.position.z = this.shoulder.shoulderPoser.vrTransforms.head.position.z + bZResValue;
       handPosition = localVector2$1.copy(this.target.position);
     }
     if (this.left) {

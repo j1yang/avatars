@@ -56,11 +56,21 @@ const localMatrix = new THREE.Matrix4();
       const handRotation = this.target.quaternion;
 			
       let handPosition = localVector2.copy(this.target.position);
-			
+
+			const tYResValue = 0.03;
+			// Hand raising restriction
 			if(this.target.position.y > this.shoulder.shoulderPoser.vrTransforms.head.position.y){
-				this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + 0.03;//1.05 / head pos + 0.5?
+				this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + tYResValue;//head position + 0.03
 				handPosition = localVector2.copy(this.target.position);
 			}
+
+			const bZResValue = 0.01;
+			//Horizontal hand restriction(maximum out).
+			if(this.target.position.z > this.shoulder.shoulderPoser.vrTransforms.head.position.z){
+				this.target.position.z = this.shoulder.shoulderPoser.vrTransforms.head.position.z + bZResValue;
+				handPosition = localVector2.copy(this.target.position)
+			}
+
 			
 			if(this.left){
 				console.log(this.target.position)
