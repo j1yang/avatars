@@ -560,6 +560,11 @@ class VRArmIK {
       this.target.position.z = this.shoulder.shoulderPoser.vrTransforms.head.position.z + bZResValue;
       handPosition = localVector2$1.copy(this.target.position);
     }
+    const fZResValue = 0.015;
+    if (this.target.position.z < this.shoulder.shoulderPoser.vrTransforms.head.position.z && this.target.position.z > this.shoulder.shoulderPoser.vrTransforms.head.position.z - fZResValue) {
+      this.target.position.z = this.shoulder.shoulderPoser.vrTransforms.head.position.z - fZResValue;
+      handPosition = localVector2$1.copy(this.target.position);
+    }
     if (this.left) {
       console.log(this.target.position);
       console.log(handPosition);

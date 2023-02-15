@@ -71,6 +71,12 @@ const localMatrix = new THREE.Matrix4();
 				handPosition = localVector2.copy(this.target.position)
 			}
 
+			//Horozontal hand restriction(minimum in).
+			const fZResValue = 0.015;
+			if((this.target.position.z < this.shoulder.shoulderPoser.vrTransforms.head.position.z) && (this.target.position.z > (this.shoulder.shoulderPoser.vrTransforms.head.position.z - fZResValue))){
+				this.target.position.z = this.shoulder.shoulderPoser.vrTransforms.head.position.z - fZResValue;
+				handPosition = localVector2.copy(this.target.position)
+			}
 			
 			if(this.left){
 				console.log(this.target.position)
