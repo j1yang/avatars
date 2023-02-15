@@ -11,6 +11,8 @@ const bankLeftRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vecto
 const bankRightRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -Math.PI/2);
 const z180Quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
 
+const testLocalVector = new THREE.Vector3();
+
 const localVector = new THREE.Vector3();
 const localVector2 = new THREE.Vector3();
 const localVector3 = new THREE.Vector3();
@@ -52,8 +54,20 @@ const localMatrix = new THREE.Matrix4();
 
 			const upperArmPosition = Helpers.getWorldPosition(this.arm.upperArm, localVector);
       const handRotation = this.target.quaternion;
-      const handPosition = localVector2.copy(this.target.position);
-
+			
+      let handPosition = localVector2.copy(this.target.position);
+			
+			if(this.target.position.y > this.shoulder.shoulderPoser.vrTransforms.head.position.y){
+				this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + 0.03;//1.05 / head pos + 0.5?
+				handPosition = localVector2.copy(this.target.position);
+			}
+			
+			if(this.left){
+				console.log(this.target.position)
+				console.log(handPosition)
+				console.log(this.shoulder.shoulderPoser.vrTransforms.head.position)
+				console.log('')
+			}
       const shoulderRotation = Helpers.getWorldQuaternion(this.shoulder.transform, localQuaternion);
       const shoulderRotationInverse = localQuaternion2.copy(shoulderRotation).invert();
 

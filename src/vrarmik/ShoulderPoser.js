@@ -4,6 +4,8 @@ import {Helpers} from './Unity.js';
 const rightVector = new THREE.Vector3(1, 0, 0);
 const z180Quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
 
+const testVector = new THREE.Vector3();
+
 const localVector = new THREE.Vector3();
 const localVector2 = new THREE.Vector3();
 const localVector3 = new THREE.Vector3();
