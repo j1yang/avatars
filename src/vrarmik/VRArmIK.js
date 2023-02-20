@@ -12,6 +12,8 @@ const bankRightRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vect
 const z180Quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
 
 const testLocalVector = new THREE.Vector3();
+const testLRot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI/2);
+const testRRot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI/2);
 
 const localVector = new THREE.Vector3();
 const localVector2 = new THREE.Vector3();
@@ -62,6 +64,11 @@ const localMatrix = new THREE.Matrix4();
 			if(this.target.position.y > this.shoulder.shoulderPoser.vrTransforms.head.position.y){
 				this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + tYResValue;//head position + 0.03
 				handPosition = localVector2.copy(this.target.position);
+				if(this.target.quaternion.w <= 0.22){
+					this.target.quaternion.w = 0.24;
+					console.log('weird!!')
+				}
+				console.log(this.target.quaternion.w)
 			}
 
 			const bZResValue = 0.01;
@@ -78,12 +85,18 @@ const localMatrix = new THREE.Matrix4();
 				handPosition = localVector2.copy(this.target.position)
 			}
 			
-			if(this.left){
-				console.log(this.target.position)
-				console.log(handPosition)
-				console.log(this.shoulder.shoulderPoser.vrTransforms.head.position)
-				console.log('')
-			}
+			// if(this.left){
+			// 	// console.log(this.target.position)
+			// 	// console.log(handPosition)
+			// 	// console.log(this.shoulder.shoulderPoser.vrTransforms.head.position)
+			// 	// console.log('')
+			// 	// console.log(handRotation)
+			// 	// this.arm.Quaternion
+			// 	// this.arm.ArmTransforms. hand lowerArm transform upperArm
+			// 	this.arm.lowerArm.quaternion.w+=1
+			// 	console.log(this.arm.lowerArm.quaternion.w)
+			// 	console.log(' ')
+			// }
       const shoulderRotation = Helpers.getWorldQuaternion(this.shoulder.transform, localQuaternion);
       const shoulderRotationInverse = localQuaternion2.copy(shoulderRotation).invert();
 
@@ -109,6 +122,7 @@ const localMatrix = new THREE.Matrix4();
     		// const factor = Math.min(yFactor, 1-xFactor);//Math.min(yFactor, 1-xFactor);
     		targetEuler.z = Math.min(Math.max(targetEuler.z, -Math.PI/2), 0);
     		targetEuler.z = (targetEuler.z * (1 - yFactor)) + (-Math.PI/2 * yFactor);
+				
     		// targetEuler.z *= 1 - xFactor;
     		// targetEuler.z *= 1 - zFactor;
       } else {
@@ -149,9 +163,28 @@ const localMatrix = new THREE.Matrix4();
 	      	upVector
 	      )
       )
-        .multiply(this.left ? rightRotation : leftRotation)
+        .multiply(this.left ? testRRot : testLRot)
         .premultiply(Helpers.getWorldQuaternion(this.arm.lowerArm.parent, localQuaternion3).invert());
       Helpers.updateMatrixMatrixWorld(this.arm.lowerArm);
+
+			// this.arm.lowerArm.rotation.copy(this.target.rotation)
+			
+			// if(this.left){
+			// 	console.log(handRotation)
+			// 	// console.log(`hand rot: `)
+			// 	// console.log(this.target.quaternion)
+			// 	// console.log(`lower arm rot: `)
+			// 	// console.log(this.arm.lowerArm.quaternion)
+			// 	// console.log(' ')
+			// }
+			// if(this.target.quaternion.w <= 0.6){
+			// 	this.target.quaternion.w = 0.65
+			// 	console.log(this.target.quaternion.w)
+			// 	// this.arm.lowerArm.rotation.order = "XYZ";
+			// 	// this.arm.lowerArm.rotation.x = this.target.quaternion.x + 0.01;
+			// 	// this.arm.lowerArm.rotation.y = this.target.quaternion.y + 0.01;
+			// 	// this.arm.lowerArm.rotation.z = this.target.quaternion.z + 0.01;
+			// }
 
       // this.arm.hand.position = handPosition;
       this.arm.hand.quaternion.copy(this.target.quaternion)

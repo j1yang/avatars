@@ -517,6 +517,8 @@ const bankLeftRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vecto
 const bankRightRotation = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), -Math.PI / 2);
 const z180Quaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
 new THREE.Vector3();
+const testLRot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
+const testRRot = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2);
 const localVector$2 = new THREE.Vector3();
 const localVector2$1 = new THREE.Vector3();
 const localVector3$1 = new THREE.Vector3();
@@ -554,6 +556,11 @@ class VRArmIK {
     if (this.target.position.y > this.shoulder.shoulderPoser.vrTransforms.head.position.y) {
       this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + tYResValue;
       handPosition = localVector2$1.copy(this.target.position);
+      if (this.target.quaternion.w <= 0.22) {
+        this.target.quaternion.w = 0.24;
+        console.log("weird!!");
+      }
+      console.log(this.target.quaternion.w);
     }
     const bZResValue = 0.01;
     if (this.target.position.z > this.shoulder.shoulderPoser.vrTransforms.head.position.z) {
@@ -564,12 +571,6 @@ class VRArmIK {
     if (this.target.position.z < this.shoulder.shoulderPoser.vrTransforms.head.position.z && this.target.position.z > this.shoulder.shoulderPoser.vrTransforms.head.position.z - fZResValue) {
       this.target.position.z = this.shoulder.shoulderPoser.vrTransforms.head.position.z - fZResValue;
       handPosition = localVector2$1.copy(this.target.position);
-    }
-    if (this.left) {
-      console.log(this.target.position);
-      console.log(handPosition);
-      console.log(this.shoulder.shoulderPoser.vrTransforms.head.position);
-      console.log("");
     }
     const shoulderRotation = Helpers.getWorldQuaternion(this.shoulder.transform, localQuaternion$1);
     const shoulderRotationInverse = localQuaternion2$1.copy(shoulderRotation).invert();
@@ -592,7 +593,7 @@ class VRArmIK {
     const upVector = localVector5$1.set(this.left ? -1 : 1, 0, 0).applyQuaternion(shoulderRotation);
     this.arm.upperArm.quaternion.setFromRotationMatrix(localMatrix$1.lookAt(zeroVector$1, localVector6$1.copy(elbowPosition).sub(upperArmPosition), upVector)).multiply(this.left ? rightRotation$1 : leftRotation$1).premultiply(Helpers.getWorldQuaternion(this.arm.upperArm.parent, localQuaternion3$1).invert());
     Helpers.updateMatrixMatrixWorld(this.arm.upperArm);
-    this.arm.lowerArm.quaternion.setFromRotationMatrix(localMatrix$1.lookAt(zeroVector$1, localVector6$1.copy(handPosition).sub(elbowPosition), upVector)).multiply(this.left ? rightRotation$1 : leftRotation$1).premultiply(Helpers.getWorldQuaternion(this.arm.lowerArm.parent, localQuaternion3$1).invert());
+    this.arm.lowerArm.quaternion.setFromRotationMatrix(localMatrix$1.lookAt(zeroVector$1, localVector6$1.copy(handPosition).sub(elbowPosition), upVector)).multiply(this.left ? testRRot : testLRot).premultiply(Helpers.getWorldQuaternion(this.arm.lowerArm.parent, localQuaternion3$1).invert());
     Helpers.updateMatrixMatrixWorld(this.arm.lowerArm);
     this.arm.hand.quaternion.copy(this.target.quaternion).multiply(this.left ? bankRightRotation : bankLeftRotation).premultiply(Helpers.getWorldQuaternion(this.arm.hand.parent, localQuaternion3$1).invert());
     Helpers.updateMatrixMatrixWorld(this.arm.hand);
