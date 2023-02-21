@@ -1854,10 +1854,46 @@ class Avatar {
     }
     if (this.options.visemes) {
       const aaValue = Math.min(this.volume * 10, 1);
+      const blinkValue = (() => {
+        const nowWindow = now % 2e3;
+        if (nowWindow >= 0 && nowWindow < 100) {
+          return nowWindow / 100;
+        } else if (nowWindow >= 100 && nowWindow < 200) {
+          return 1 - (nowWindow - 100) / 100;
+        } else {
+          return 0;
+        }
+      })();
       this.skinnedMeshes.forEach((o2) => {
         const { morphTargetDictionary, morphTargetInfluences } = o2;
-        if (o2.name === "Wolf3D_Head" || o2.name === "Wolf3D_Teeth") {
-          morphTargetInfluences[0] = aaValue;
+        if (morphTargetDictionary && morphTargetInfluences) {
+          const aaMorphTest = /.*_a+(?!\w+)/i;
+          const aaMorphTarget = Object.keys(morphTargetDictionary).filter((key) => aaMorphTest.test(key));
+          let aaMorphTargetIndex = morphTargetDictionary[aaMorphTarget];
+          if (aaMorphTargetIndex === void 0) {
+            aaMorphTargetIndex = morphTargetDictionary[26];
+          }
+          if (aaMorphTargetIndex !== void 0) {
+            morphTargetInfluences[aaMorphTargetIndex] = aaValue;
+          }
+          const blinkLeftMorphTest = /.*blink_*l(?:eft)*/i;
+          const blinkLeftMorphTarget = Object.keys(morphTargetDictionary).filter((key) => blinkLeftMorphTest.test(key));
+          let blinkLeftMorphTargetIndex = morphTargetDictionary[blinkLeftMorphTarget];
+          if (blinkLeftMorphTargetIndex === void 0) {
+            blinkLeftMorphTargetIndex = morphTargetDictionary[16];
+          }
+          if (blinkLeftMorphTargetIndex !== void 0) {
+            morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
+          }
+          const blinkRightMorphTest = /.*blink_*r(?:ight)*/i;
+          const blinkRightMorphTarget = Object.keys(morphTargetDictionary).filter((key) => blinkRightMorphTest.test(key));
+          let blinkRightMorphTargetIndex = morphTargetDictionary[blinkRightMorphTarget];
+          if (blinkRightMorphTargetIndex === void 0) {
+            blinkRightMorphTargetIndex = morphTargetDictionary[17];
+          }
+          if (blinkRightMorphTargetIndex !== void 0) {
+            morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
+          }
         }
       });
     }

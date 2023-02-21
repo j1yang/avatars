@@ -989,6 +989,27 @@ class Avatar {
       this.decapitate();
     }
 
+    // if (this.options.visemes) {
+    //   const aaValue = Math.min(this.volume * 10, 1);
+    //   const blinkValue = (() => {
+    //     const nowWindow = now % 2000;
+    //     if (nowWindow >= 0 && nowWindow < 100) {
+    //       return nowWindow/100;
+    //     } else if (nowWindow >= 100 && nowWindow < 200) {
+    //       return 1 - (nowWindow-100)/100;
+    //     } else {
+    //       return 0;
+    //     }
+    //   })();
+    //   this.skinnedMeshes.forEach(o => {
+    //     const {morphTargetDictionary, morphTargetInfluences} = o;
+    //     if (o.name === 'Wolf3D_Head' || o.name === 'Wolf3D_Teeth') {
+
+    //       morphTargetInfluences[0] = aaValue;
+    //       // morphTargetInfluences[morphTargetDictionary['mouthOpen']] = aaValue;
+    //     }
+    //   });
+    // }
     if (this.options.visemes) {
       const aaValue = Math.min(this.volume * 10, 1);
       const blinkValue = (() => {
@@ -1003,10 +1024,39 @@ class Avatar {
       })();
       this.skinnedMeshes.forEach(o => {
         const {morphTargetDictionary, morphTargetInfluences} = o;
-        if (o.name === 'Wolf3D_Head' || o.name === 'Wolf3D_Teeth') {
+        if (morphTargetDictionary && morphTargetInfluences) {
+          const aaMorphTest = /.*_a+(?!\w+)/i;
+          const aaMorphTarget = Object.keys(morphTargetDictionary).filter(key => aaMorphTest.test(key));
+          let aaMorphTargetIndex = morphTargetDictionary[aaMorphTarget];
+          if (aaMorphTargetIndex === undefined) {
+            // VRM-specific
+            aaMorphTargetIndex = morphTargetDictionary[26];
+          }
+          if (aaMorphTargetIndex !== undefined) {
+            morphTargetInfluences[aaMorphTargetIndex] = aaValue;
+          }
 
-          morphTargetInfluences[0] = aaValue;
-          // morphTargetInfluences[morphTargetDictionary['mouthOpen']] = aaValue;
+          const blinkLeftMorphTest = /.*blink_*l(?:eft)*/i;
+          const blinkLeftMorphTarget = Object.keys(morphTargetDictionary).filter(key => blinkLeftMorphTest.test(key));
+          let blinkLeftMorphTargetIndex = morphTargetDictionary[blinkLeftMorphTarget];
+          if (blinkLeftMorphTargetIndex === undefined) {
+            // VRM-specific
+            blinkLeftMorphTargetIndex = morphTargetDictionary[16];
+          }
+          if (blinkLeftMorphTargetIndex !== undefined) {
+            morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
+          }
+
+          const blinkRightMorphTest = /.*blink_*r(?:ight)*/i;
+          const blinkRightMorphTarget = Object.keys(morphTargetDictionary).filter(key => blinkRightMorphTest.test(key));
+          let blinkRightMorphTargetIndex = morphTargetDictionary[blinkRightMorphTarget];
+          if (blinkRightMorphTargetIndex === undefined) {
+            // VRM-specific
+            blinkRightMorphTargetIndex = morphTargetDictionary[17];
+          }
+          if (blinkRightMorphTargetIndex !== undefined) {
+            morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
+          }
         }
       });
     }
