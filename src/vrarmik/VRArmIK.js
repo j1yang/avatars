@@ -65,7 +65,7 @@ const localMatrix = new THREE.Matrix4();
 				this.target.position.y = this.shoulder.shoulderPoser.vrTransforms.head.position.y + tYResValue;//head position + 0.03
 				handPosition = localVector2.copy(this.target.position);
 				if(this.target.quaternion.w <= 0.22){
-					this.target.quaternion.w = 0.24;
+					// this.target.quaternion.w = 0.24;
 					console.log('weird!!')
 				}
 				console.log(this.target.quaternion.w)
@@ -155,12 +155,16 @@ const localMatrix = new THREE.Matrix4();
         .premultiply(Helpers.getWorldQuaternion(this.arm.upperArm.parent, localQuaternion3).invert());
       Helpers.updateMatrixMatrixWorld(this.arm.upperArm);
 
+			const rotStrength = 0.01;
+			const lowerArmX = this.left? rotStrength : -rotStrength;
+			const lowerArmY = 0;
+			const lowerArmZ = 0;
       // this.arm.lowerArm.position = elbowPosition;
       this.arm.lowerArm.quaternion.setFromRotationMatrix(
         localMatrix.lookAt(
 	      	zeroVector,
 	      	localVector6.copy(handPosition).sub(elbowPosition),
-	      	upVector
+	      	localVector5.set(lowerArmX, lowerArmY, lowerArmZ).applyQuaternion(handRotation)
 	      )
       )
         .multiply(this.left ? testRRot : testLRot)
@@ -176,14 +180,6 @@ const localMatrix = new THREE.Matrix4();
 			// 	// console.log(`lower arm rot: `)
 			// 	// console.log(this.arm.lowerArm.quaternion)
 			// 	// console.log(' ')
-			// }
-			// if(this.target.quaternion.w <= 0.6){
-			// 	this.target.quaternion.w = 0.65
-			// 	console.log(this.target.quaternion.w)
-			// 	// this.arm.lowerArm.rotation.order = "XYZ";
-			// 	// this.arm.lowerArm.rotation.x = this.target.quaternion.x + 0.01;
-			// 	// this.arm.lowerArm.rotation.y = this.target.quaternion.y + 0.01;
-			// 	// this.arm.lowerArm.rotation.z = this.target.quaternion.z + 0.01;
 			// }
 
       // this.arm.hand.position = handPosition;
