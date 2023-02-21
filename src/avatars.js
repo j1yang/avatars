@@ -964,12 +964,12 @@ class Avatar {
           const fingerBone = fingerBones[k];
           if (fingerBone) {
             let setter;
-            if (k === 'thumb') {
-              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, left ? 1 : -1, 0), gamepadInput.grip * Math.PI*(i === 0 ? 0.125 : 0.25));
-            } else if (k === 'index') {
-              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, 0, left ? -1 : 1), gamepadInput.pointer * Math.PI*0.5);
-            } else {
-              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, 0, left ? -1 : 1), gamepadInput.grip * Math.PI*0.5);
+            if (k === 'thumb') {//thumb
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, left ? 1 : -1, 0), gamepadInput.grip * Math.PI*(i === 0 ? 0.007 : 0.12));//0.125 : 0.25
+            } else if (k === 'index') {//index
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, left ? -0.4 : 0.4, left ? -0.6 : 0.6), gamepadInput.pointer * Math.PI*0.3);
+            } else {//midle, ring, little
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(-0.15, left ? -0.4 : 0.4, left ? -0.9 : 0.9), gamepadInput.grip * Math.PI*0.35);
             }
             let index = 0;
             fingerBone.traverse(subFingerBone => {
