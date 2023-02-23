@@ -1036,6 +1036,8 @@ class Avatar {
             morphTargetInfluences[aaMorphTargetIndex] = aaValue;
           }
 
+
+          
           const blinkLeftMorphTest = /.*blink_*l(?:eft)*/i;
           const blinkLeftMorphTarget = Object.keys(morphTargetDictionary).filter(key => blinkLeftMorphTest.test(key));
           let blinkLeftMorphTargetIndex = morphTargetDictionary[blinkLeftMorphTarget];
@@ -1043,7 +1045,7 @@ class Avatar {
             // VRM-specific
             blinkLeftMorphTargetIndex = morphTargetDictionary[16];
           }
-          if (blinkLeftMorphTargetIndex !== undefined) {
+          if (blinkLeftMorphTargetIndex !== undefined && parseInt((now/1000)) % 10 == 0) {
             morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
           }
 
@@ -1054,7 +1056,7 @@ class Avatar {
             // VRM-specific
             blinkRightMorphTargetIndex = morphTargetDictionary[17];
           }
-          if (blinkRightMorphTargetIndex !== undefined) {
+          if (blinkRightMorphTargetIndex !== undefined  && parseInt((now/1000)) % 10 == 0) {
             morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
           }
         }

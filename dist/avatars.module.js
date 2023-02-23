@@ -127,20 +127,20 @@ const ae = Object.freeze(new THREE.Matrix4()), le = Object.freeze(new THREE.Quat
 class fe {
   constructor(t, n2 = {}) {
     var i, r, o2, s, a, l;
-    if (this._currentTail = new THREE.Vector3(), this._prevTail = new THREE.Vector3(), this._nextTail = new THREE.Vector3(), this._boneAxis = new THREE.Vector3(), this._centerSpacePosition = new THREE.Vector3(), this._center = null, this._parentWorldRotation = new THREE.Quaternion(), this._initialLocalMatrix = new THREE.Matrix4(), this._initialLocalRotation = new THREE.Quaternion(), this._initialLocalChildPosition = new THREE.Vector3(), this.bone = t, this.bone.matrixAutoUpdate = false, this.radius = null !== (i = n2.radius) && void 0 !== i ? i : 0.02, this.stiffnessForce = null !== (r = n2.stiffnessForce) && void 0 !== r ? r : 1, this.gravityDir = n2.gravityDir ? new THREE.Vector3().copy(n2.gravityDir) : new THREE.Vector3().set(0, -1, 0), this.gravityPower = null !== (o2 = n2.gravityPower) && void 0 !== o2 ? o2 : 0, this.dragForce = null !== (s = n2.dragForce) && void 0 !== s ? s : 0.4, this.colliders = null !== (a = n2.colliders) && void 0 !== a ? a : [], this._centerSpacePosition.setFromMatrixPosition(this.bone.matrixWorld), this._initialLocalMatrix.copy(this.bone.matrix), this._initialLocalRotation.copy(this.bone.quaternion), 0 === this.bone.children.length)
+    if (this._currentTail = new THREE.Vector3(), this._prevTail = new THREE.Vector3(), this._nextTail = new THREE.Vector3(), this._boneAxis = new THREE.Vector3(), this._centerSpacePosition = new THREE.Vector3(), this._center = null, this._parentWorldRotation = new THREE.Quaternion(), this._initialLocalMatrix = new THREE.Matrix4(), this._initialLocalRotation = new THREE.Quaternion(), this._initialLocalChildPosition = new THREE.Vector3(), this.bone = t, this.bone.matrixAutoUpdate = false, this.radius = (i = n2.radius) !== null && i !== void 0 ? i : 0.02, this.stiffnessForce = (r = n2.stiffnessForce) !== null && r !== void 0 ? r : 1, this.gravityDir = n2.gravityDir ? new THREE.Vector3().copy(n2.gravityDir) : new THREE.Vector3().set(0, -1, 0), this.gravityPower = (o2 = n2.gravityPower) !== null && o2 !== void 0 ? o2 : 0, this.dragForce = (s = n2.dragForce) !== null && s !== void 0 ? s : 0.4, this.colliders = (a = n2.colliders) !== null && a !== void 0 ? a : [], this._centerSpacePosition.setFromMatrixPosition(this.bone.matrixWorld), this._initialLocalMatrix.copy(this.bone.matrix), this._initialLocalRotation.copy(this.bone.quaternion), this.bone.children.length === 0)
       this._initialLocalChildPosition.copy(this.bone.position).normalize().multiplyScalar(0.07);
     else {
       const e = this.bone.children[0];
       this._initialLocalChildPosition.copy(e.position);
     }
-    this.bone.localToWorld(this._currentTail.copy(this._initialLocalChildPosition)), this._prevTail.copy(this._currentTail), this._nextTail.copy(this._currentTail), this._boneAxis.copy(this._initialLocalChildPosition).normalize(), this._centerSpaceBoneLength = de.copy(this._initialLocalChildPosition).applyMatrix4(this.bone.matrixWorld).sub(this._centerSpacePosition).length(), this.center = null !== (l = n2.center) && void 0 !== l ? l : null;
+    this.bone.localToWorld(this._currentTail.copy(this._initialLocalChildPosition)), this._prevTail.copy(this._currentTail), this._nextTail.copy(this._currentTail), this._boneAxis.copy(this._initialLocalChildPosition).normalize(), this._centerSpaceBoneLength = de.copy(this._initialLocalChildPosition).applyMatrix4(this.bone.matrixWorld).sub(this._centerSpacePosition).length(), this.center = (l = n2.center) !== null && l !== void 0 ? l : null;
   }
   get center() {
     return this._center;
   }
   set center(e) {
     var t;
-    this._getMatrixCenterToWorld(pe), this._currentTail.applyMatrix4(pe), this._prevTail.applyMatrix4(pe), this._nextTail.applyMatrix4(pe), (null === (t = this._center) || void 0 === t ? void 0 : t.userData.inverseCacheProxy) && (this._center.userData.inverseCacheProxy.revert(), delete this._center.userData.inverseCacheProxy), this._center = e, this._center && (this._center.userData.inverseCacheProxy || (this._center.userData.inverseCacheProxy = new se(this._center.matrixWorld))), this._getMatrixWorldToCenter(pe), this._currentTail.applyMatrix4(pe), this._prevTail.applyMatrix4(pe), this._nextTail.applyMatrix4(pe), pe.multiply(this.bone.matrixWorld), this._centerSpacePosition.setFromMatrixPosition(pe), this._centerSpaceBoneLength = de.copy(this._initialLocalChildPosition).applyMatrix4(pe).sub(this._centerSpacePosition).length();
+    this._getMatrixCenterToWorld(pe), this._currentTail.applyMatrix4(pe), this._prevTail.applyMatrix4(pe), this._nextTail.applyMatrix4(pe), ((t = this._center) === null || t === void 0 ? void 0 : t.userData.inverseCacheProxy) && (this._center.userData.inverseCacheProxy.revert(), delete this._center.userData.inverseCacheProxy), this._center = e, this._center && (this._center.userData.inverseCacheProxy || (this._center.userData.inverseCacheProxy = new se(this._center.matrixWorld))), this._getMatrixWorldToCenter(pe), this._currentTail.applyMatrix4(pe), this._prevTail.applyMatrix4(pe), this._nextTail.applyMatrix4(pe), pe.multiply(this.bone.matrixWorld), this._centerSpacePosition.setFromMatrixPosition(pe), this._centerSpaceBoneLength = de.copy(this._initialLocalChildPosition).applyMatrix4(pe).sub(this._centerSpacePosition).length();
   }
   reset() {
     this.bone.quaternion.copy(this._initialLocalRotation), this.bone.updateMatrix(), this.bone.matrixWorld.multiplyMatrices(this._getParentMatrixWorld(), this.bone.matrix), this._centerSpacePosition.setFromMatrixPosition(this.bone.matrixWorld), this.bone.localToWorld(this._currentTail.copy(this._initialLocalChildPosition)), this._prevTail.copy(this._currentTail), this._nextTail.copy(this._currentTail);
@@ -210,7 +210,7 @@ class Te {
   import(e) {
     var t;
     return n(this, void 0, void 0, function* () {
-      const n2 = null === (t = e.parser.json.extensions) || void 0 === t ? void 0 : t.VRM;
+      const n2 = (t = e.parser.json.extensions) === null || t === void 0 ? void 0 : t.VRM;
       if (!n2)
         return null;
       const i = n2.secondaryAnimation;
@@ -227,7 +227,7 @@ class Te {
     return n(this, void 0, void 0, function* () {
       const o2 = i.boneGroups || [], s = [];
       return yield Promise.all(o2.map((i2) => n(this, void 0, void 0, function* () {
-        if (void 0 === i2.stiffiness || void 0 === i2.gravityDir || void 0 === i2.gravityDir.x || void 0 === i2.gravityDir.y || void 0 === i2.gravityDir.z || void 0 === i2.gravityPower || void 0 === i2.dragForce || void 0 === i2.hitRadius || void 0 === i2.colliderGroups || void 0 === i2.bones || void 0 === i2.center)
+        if (i2.stiffiness === void 0 || i2.gravityDir === void 0 || i2.gravityDir.x === void 0 || i2.gravityDir.y === void 0 || i2.gravityDir.z === void 0 || i2.gravityPower === void 0 || i2.dragForce === void 0 || i2.hitRadius === void 0 || i2.colliderGroups === void 0 || i2.bones === void 0 || i2.center === void 0)
           return;
         const o3 = i2.stiffiness, a = new THREE.Vector3(i2.gravityDir.x, i2.gravityDir.y, -i2.gravityDir.z), l = i2.gravityPower, d = i2.dragForce, h = i2.hitRadius, u2 = [];
         i2.colliderGroups.forEach((e) => {
@@ -235,7 +235,7 @@ class Te {
         });
         const c = [];
         yield Promise.all(i2.bones.map((e) => n(this, void 0, void 0, function* () {
-          const n2 = yield t.parser.getDependency("node", e), r2 = -1 !== i2.center ? yield t.parser.getDependency("node", i2.center) : null;
+          const n2 = yield t.parser.getDependency("node", e), r2 = i2.center !== -1 ? yield t.parser.getDependency("node", i2.center) : null;
           n2 && n2.traverse((e2) => {
             const t2 = this._createSpringBone(e2, { radius: h, stiffnessForce: o3, gravityDir: a, gravityPower: l, dragForce: d, colliders: u2, center: r2 });
             c.push(t2);
@@ -247,15 +247,15 @@ class Te {
   _importColliderMeshGroups(e, t) {
     return n(this, void 0, void 0, function* () {
       const i = t.colliderGroups;
-      if (void 0 === i)
+      if (i === void 0)
         return [];
       const r = [];
       return i.forEach((t2) => n(this, void 0, void 0, function* () {
-        if (void 0 === t2.node || void 0 === t2.colliders)
+        if (t2.node === void 0 || t2.colliders === void 0)
           return;
         const n2 = yield e.parser.getDependency("node", t2.node), i2 = [];
         t2.colliders.forEach((e2) => {
-          if (void 0 === e2.offset || void 0 === e2.offset.x || void 0 === e2.offset.y || void 0 === e2.offset.z || void 0 === e2.radius)
+          if (e2.offset === void 0 || e2.offset.x === void 0 || e2.offset.y === void 0 || e2.offset.z === void 0 || e2.radius === void 0)
             return;
           const t3 = _e.set(e2.offset.x, e2.offset.y, -e2.offset.z), r2 = this._createColliderMesh(e2.radius, t3);
           n2.add(r2), i2.push(r2);
@@ -481,9 +481,7 @@ class ShoulderPoser {
   }
   rotateShoulderBase() {
     const angleY = this.getCombinedDirectionAngleUp();
-    this.shoulder.transform.quaternion.setFromEuler(localEuler$2.set(0, angleY, 0, "YXZ")).premultiply(
-      localQuaternion$2.copy(this.shoulder.hips.quaternion).multiply(z180Quaternion$1)
-    );
+    this.shoulder.transform.quaternion.setFromEuler(localEuler$2.set(0, angleY, 0, "YXZ")).premultiply(localQuaternion$2.copy(this.shoulder.hips.quaternion).multiply(z180Quaternion$1));
     this.shoulder.transform.quaternion.premultiply(Helpers.getWorldQuaternion(this.shoulder.transform.parent, localQuaternion$2).invert());
     Helpers.updateMatrixMatrixWorld(this.shoulder.transform);
     Helpers.updateMatrixWorld(this.shoulder.leftShoulderAnchor);
@@ -579,10 +577,7 @@ class VRArmIK {
     const directDistance = upperArmPosition.distanceTo(handPosition) / 2;
     const offsetDistance = hypotenuseDistance > directDistance ? Math.sqrt(hypotenuseDistance * hypotenuseDistance - directDistance * directDistance) : 0;
     const offsetDirection = localVector3$1.copy(handPosition).sub(upperArmPosition).normalize().cross(localVector4$1.set(-1, 0, 0).applyQuaternion(shoulderRotation));
-    const targetEuler = localEuler$1.setFromQuaternion(
-      localQuaternion3$1.multiplyQuaternions(handRotation, shoulderRotationInverse).premultiply(z180Quaternion),
-      "XYZ"
-    );
+    const targetEuler = localEuler$1.setFromQuaternion(localQuaternion3$1.multiplyQuaternions(handRotation, shoulderRotationInverse).premultiply(z180Quaternion), "XYZ");
     if (this.left) {
       const yFactor = Math.min(Math.max((targetEuler.y + Math.PI * 0.1) / (Math.PI / 2), 0), 1);
       targetEuler.z = Math.min(Math.max(targetEuler.z, -Math.PI / 2), 0);
@@ -595,25 +590,13 @@ class VRArmIK {
     offsetDirection.applyQuaternion(shoulderRotationInverse).applyAxisAngle(forwardVector, targetEuler.z).applyQuaternion(shoulderRotation);
     const elbowPosition = localVector4$1.copy(upperArmPosition).add(handPosition).divideScalar(2).add(localVector5$1.copy(offsetDirection).multiplyScalar(offsetDistance));
     const upVector = localVector5$1.set(this.left ? -1 : 1, 0, 0).applyQuaternion(shoulderRotation);
-    this.arm.upperArm.quaternion.setFromRotationMatrix(
-      localMatrix$1.lookAt(
-        zeroVector$1,
-        localVector6$1.copy(elbowPosition).sub(upperArmPosition),
-        upVector
-      )
-    ).multiply(this.left ? rightRotation$1 : leftRotation$1).premultiply(Helpers.getWorldQuaternion(this.arm.upperArm.parent, localQuaternion3$1).invert());
+    this.arm.upperArm.quaternion.setFromRotationMatrix(localMatrix$1.lookAt(zeroVector$1, localVector6$1.copy(elbowPosition).sub(upperArmPosition), upVector)).multiply(this.left ? rightRotation$1 : leftRotation$1).premultiply(Helpers.getWorldQuaternion(this.arm.upperArm.parent, localQuaternion3$1).invert());
     Helpers.updateMatrixMatrixWorld(this.arm.upperArm);
     const rotStrength = 7e-3;
     const lowerArmX = this.left ? rotStrength : -rotStrength;
     const lowerArmY = 0;
     const lowerArmZ = 0;
-    this.arm.lowerArm.quaternion.setFromRotationMatrix(
-      localMatrix$1.lookAt(
-        zeroVector$1,
-        localVector6$1.copy(handPosition).sub(elbowPosition),
-        localVector5$1.set(lowerArmX, lowerArmY, lowerArmZ).applyQuaternion(handRotation)
-      )
-    ).multiply(this.left ? testRRot : testLRot).premultiply(Helpers.getWorldQuaternion(this.arm.lowerArm.parent, localQuaternion3$1).invert());
+    this.arm.lowerArm.quaternion.setFromRotationMatrix(localMatrix$1.lookAt(zeroVector$1, localVector6$1.copy(handPosition).sub(elbowPosition), localVector5$1.set(lowerArmX, lowerArmY, lowerArmZ).applyQuaternion(handRotation))).multiply(this.left ? testRRot : testLRot).premultiply(Helpers.getWorldQuaternion(this.arm.lowerArm.parent, localQuaternion3$1).invert());
     Helpers.updateMatrixMatrixWorld(this.arm.lowerArm);
     this.arm.hand.quaternion.copy(this.target.quaternion).multiply(this.left ? bankRightRotation : bankLeftRotation).premultiply(Helpers.getWorldQuaternion(this.arm.hand.parent, localQuaternion3$1).invert());
     Helpers.updateMatrixMatrixWorld(this.arm.hand);
@@ -729,33 +712,16 @@ class Leg {
     const hypotenuseDistance = this.upperLegLength;
     const verticalDistance = (this.legsManager.rig.shoulderTransforms.prone || !this.standing ? upperLegPosition.distanceTo(this.foot.stickTransform.position) : Math.abs(upperLegPosition.y - this.foot.stickTransform.position.y)) * this.upperLegLength / this.legLength;
     const offsetDistance = hypotenuseDistance > verticalDistance ? Math.sqrt(hypotenuseDistance * hypotenuseDistance - verticalDistance * verticalDistance) : 0;
-    const lowerLegPosition = localVector4.copy(upperLegPosition).add(footPosition).divideScalar(2).add(
-      localVector5.copy(footPosition).sub(upperLegPosition).cross(localVector6.set(1, 0, 0).applyQuaternion(footRotation)).normalize().multiplyScalar(offsetDistance)
-    );
-    this.upperLeg.quaternion.setFromRotationMatrix(
-      localMatrix.lookAt(
-        zeroVector,
-        localVector5.copy(upperLegPosition).sub(lowerLegPosition),
-        localVector6.set(0, 1, 0).applyQuaternion(footRotation)
-      )
-    ).multiply(downHalfRotation).premultiply(Helpers.getWorldQuaternion(this.transform, localQuaternion2).invert());
+    const lowerLegPosition = localVector4.copy(upperLegPosition).add(footPosition).divideScalar(2).add(localVector5.copy(footPosition).sub(upperLegPosition).cross(localVector6.set(1, 0, 0).applyQuaternion(footRotation)).normalize().multiplyScalar(offsetDistance));
+    this.upperLeg.quaternion.setFromRotationMatrix(localMatrix.lookAt(zeroVector, localVector5.copy(upperLegPosition).sub(lowerLegPosition), localVector6.set(0, 1, 0).applyQuaternion(footRotation))).multiply(downHalfRotation).premultiply(Helpers.getWorldQuaternion(this.transform, localQuaternion2).invert());
     Helpers.updateMatrixMatrixWorld(this.upperLeg);
-    this.lowerLeg.quaternion.setFromRotationMatrix(
-      localMatrix.lookAt(
-        zeroVector,
-        localVector5.copy(lowerLegPosition).sub(footPosition),
-        localVector6.set(0, 0, 1).applyQuaternion(footRotation)
-      )
-    ).multiply(downHalfRotation).premultiply(Helpers.getWorldQuaternion(this.upperLeg, localQuaternion2).invert());
+    this.lowerLeg.quaternion.setFromRotationMatrix(localMatrix.lookAt(zeroVector, localVector5.copy(lowerLegPosition).sub(footPosition), localVector6.set(0, 0, 1).applyQuaternion(footRotation))).multiply(downHalfRotation).premultiply(Helpers.getWorldQuaternion(this.upperLeg, localQuaternion2).invert());
     Helpers.updateMatrixMatrixWorld(this.lowerLeg);
     this.foot.quaternion.copy(footRotation).multiply(downHalfRotation).premultiply(Helpers.getWorldQuaternion(this.lowerLeg, localQuaternion2).invert());
     Helpers.updateMatrixMatrixWorld(this.foot);
   }
   getStandFactor() {
-    return 1 - Math.pow(Math.min(Math.max(
-      (Helpers.getWorldPosition(this.legsManager.rig.shoulderTransforms.eyes, localVector$1).add(this.eyesToUpperLegOffset).y - this.legsManager.poseManager.vrTransforms.floorHeight - this.legLength) / (this.legsManager.rig.height * 0.2),
-      0
-    ), 1), 0.7);
+    return 1 - Math.pow(Math.min(Math.max((Helpers.getWorldPosition(this.legsManager.rig.shoulderTransforms.eyes, localVector$1).add(this.eyesToUpperLegOffset).y - this.legsManager.poseManager.vrTransforms.floorHeight - this.legLength) / (this.legsManager.rig.height * 0.2), 0), 1), 0.7);
   }
 }
 class LegsManager {
@@ -931,9 +897,7 @@ class LegsManager {
       }
     }
     if (this.rig.shoulderTransforms.prone) {
-      const targetPosition = Helpers.getWorldPosition(this.leftLeg.upperLeg, localVector6).add(
-        localVector7.set(0, -this.leftLeg.legLength * 0.95 + this.poseManager.vrTransforms.floorHeight, 0).applyQuaternion(this.hips.quaternion)
-      );
+      const targetPosition = Helpers.getWorldPosition(this.leftLeg.upperLeg, localVector6).add(localVector7.set(0, -this.leftLeg.legLength * 0.95 + this.poseManager.vrTransforms.floorHeight, 0).applyQuaternion(this.hips.quaternion));
       targetPosition.y = 0;
       this.leftLeg.foot.stickTransform.position.lerp(targetPosition, 0.1);
       this.leftLeg.stepping = false;
@@ -943,9 +907,7 @@ class LegsManager {
         this.leftLeg.stepping = false;
       }
     } else if (!this.leftLeg.standing) {
-      const targetPosition = Helpers.getWorldPosition(this.leftLeg.upperLeg, localVector6).add(
-        localVector7.set(0, 0, 1).normalize().applyQuaternion(this.hips.quaternion).multiplyScalar(this.leftLeg.legLength * 0.5)
-      );
+      const targetPosition = Helpers.getWorldPosition(this.leftLeg.upperLeg, localVector6).add(localVector7.set(0, 0, 1).normalize().applyQuaternion(this.hips.quaternion).multiplyScalar(this.leftLeg.legLength * 0.5));
       this.leftLeg.foot.stickTransform.position.lerp(targetPosition, 0.1);
     } else {
       const targetPosition = localVector6.copy(this.leftLeg.foot.stickTransform.position);
@@ -953,9 +915,7 @@ class LegsManager {
       this.leftLeg.foot.stickTransform.position.lerp(targetPosition, 0.2);
     }
     if (this.rig.shoulderTransforms.prone) {
-      const targetPosition = Helpers.getWorldPosition(this.rightLeg.upperLeg, localVector6).add(
-        localVector7.set(0, -this.rightLeg.legLength * 0.95 + this.poseManager.vrTransforms.floorHeight, 0).applyQuaternion(this.hips.quaternion)
-      );
+      const targetPosition = Helpers.getWorldPosition(this.rightLeg.upperLeg, localVector6).add(localVector7.set(0, -this.rightLeg.legLength * 0.95 + this.poseManager.vrTransforms.floorHeight, 0).applyQuaternion(this.hips.quaternion));
       targetPosition.y = 0;
       this.rightLeg.foot.stickTransform.position.lerp(targetPosition, 0.1);
       this.rightLeg.stepping = false;
@@ -965,9 +925,7 @@ class LegsManager {
         this.rightLeg.stepping = false;
       }
     } else if (!this.rightLeg.standing) {
-      const targetPosition = Helpers.getWorldPosition(this.rightLeg.upperLeg, localVector6).add(
-        localVector7.set(0, 0, 1).normalize().applyQuaternion(this.hips.quaternion).multiplyScalar(this.rightLeg.legLength * 0.6)
-      );
+      const targetPosition = Helpers.getWorldPosition(this.rightLeg.upperLeg, localVector6).add(localVector7.set(0, 0, 1).normalize().applyQuaternion(this.hips.quaternion).multiplyScalar(this.rightLeg.legLength * 0.6));
       this.rightLeg.foot.stickTransform.position.lerp(targetPosition, 0.1);
     } else {
       const targetPosition = localVector6.copy(this.rightLeg.foot.stickTransform.position);
@@ -1056,11 +1014,7 @@ const _copySkeleton = (src, dst) => {
   _localizeMatrixWorld(armature);
   dst.calculateInverses();
 };
-const cubeGeometry = new THREE.ConeBufferGeometry(0.05, 0.2, 3).applyMatrix4(
-  new THREE.Matrix4().makeRotationFromQuaternion(
-    new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1))
-  )
-);
+const cubeGeometry = new THREE.ConeBufferGeometry(0.05, 0.2, 3).applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1))));
 const cubeMaterials = {};
 const _getCubeMaterial = (color) => {
   let material = cubeMaterials[color];
@@ -1597,37 +1551,13 @@ class Avatar {
     const qrArm = flipZ ? Left_arm : Right_arm;
     const qrElbow = flipZ ? Left_elbow : Right_elbow;
     const qrWrist = flipZ ? Left_wrist : Right_wrist;
-    const qr = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2).premultiply(
-      new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(
-        new THREE.Vector3(0, 0, 0),
-        qrElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qrArm.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion),
-        new THREE.Vector3(0, 1, 0)
-      ))
-    );
-    const qr2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2).premultiply(
-      new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(
-        new THREE.Vector3(0, 0, 0),
-        qrWrist.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qrElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion),
-        new THREE.Vector3(0, 1, 0)
-      ))
-    );
+    const qr = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2).premultiply(new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(0, 0, 0), qrElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qrArm.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion), new THREE.Vector3(0, 1, 0))));
+    const qr2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -Math.PI / 2).premultiply(new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(0, 0, 0), qrWrist.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qrElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion), new THREE.Vector3(0, 1, 0))));
     const qlArm = flipZ ? Right_arm : Left_arm;
     const qlElbow = flipZ ? Right_elbow : Left_elbow;
     const qlWrist = flipZ ? Right_wrist : Left_wrist;
-    const ql = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2).premultiply(
-      new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(
-        new THREE.Vector3(0, 0, 0),
-        qlElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qlArm.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion),
-        new THREE.Vector3(0, 1, 0)
-      ))
-    );
-    const ql2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2).premultiply(
-      new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(
-        new THREE.Vector3(0, 0, 0),
-        qlWrist.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qlElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion),
-        new THREE.Vector3(0, 1, 0)
-      ))
-    );
+    const ql = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2).premultiply(new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(0, 0, 0), qlElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qlArm.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion), new THREE.Vector3(0, 1, 0))));
+    const ql2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2).premultiply(new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(0, 0, 0), qlWrist.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse).sub(qlElbow.getWorldPosition(new THREE.Vector3()).applyMatrix4(armatureMatrixInverse)).applyQuaternion(armatureQuaternion), new THREE.Vector3(0, 1, 0))));
     _ensurePrerotation("Right_arm").multiply(qr.clone().invert());
     _ensurePrerotation("Right_elbow").multiply(qr.clone()).premultiply(qr2.clone().invert());
     _ensurePrerotation("Left_arm").multiply(ql.clone().invert());
@@ -1882,7 +1812,7 @@ class Avatar {
           if (blinkLeftMorphTargetIndex === void 0) {
             blinkLeftMorphTargetIndex = morphTargetDictionary[16];
           }
-          if (blinkLeftMorphTargetIndex !== void 0) {
+          if (blinkLeftMorphTargetIndex !== void 0 && parseInt(now / 1e3) % 10 == 0) {
             morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
           }
           const blinkRightMorphTest = /.*blink_*r(?:ight)*/i;
@@ -1891,7 +1821,7 @@ class Avatar {
           if (blinkRightMorphTargetIndex === void 0) {
             blinkRightMorphTargetIndex = morphTargetDictionary[17];
           }
-          if (blinkRightMorphTargetIndex !== void 0) {
+          if (blinkRightMorphTargetIndex !== void 0 && parseInt(now / 1e3) % 10 == 0) {
             morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
           }
         }
