@@ -1016,6 +1016,8 @@ class Avatar {
     //     }
     //   });
     // }
+    
+
     if (this.options.visemes) {
       const aaValue = Math.min(this.volume * 10, 1);
       const blinkValue = (() => {
@@ -1028,6 +1030,7 @@ class Avatar {
           return 0;
         }
       })();
+
       this.skinnedMeshes.forEach(o => {
         const {morphTargetDictionary, morphTargetInfluences} = o;
         if (morphTargetDictionary && morphTargetInfluences) {
@@ -1042,8 +1045,9 @@ class Avatar {
             morphTargetInfluences[aaMorphTargetIndex] = aaValue;
           }
 
-
           
+          
+          const rdmNum = Math.floor(Math.random() * 5);
           const blinkLeftMorphTest = /.*blink_*l(?:eft)*/i;
           const blinkLeftMorphTarget = Object.keys(morphTargetDictionary).filter(key => blinkLeftMorphTest.test(key));
           let blinkLeftMorphTargetIndex = morphTargetDictionary[blinkLeftMorphTarget];
@@ -1051,7 +1055,7 @@ class Avatar {
             // VRM-specific
             blinkLeftMorphTargetIndex = morphTargetDictionary[16];
           }
-          if (blinkLeftMorphTargetIndex !== undefined && parseInt((now/1000)) % 10 == 0) {
+          if (blinkLeftMorphTargetIndex !== undefined && parseInt((now/1000)) % 10 == rdmNum) {
             morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
           }
 
@@ -1062,7 +1066,7 @@ class Avatar {
             // VRM-specific
             blinkRightMorphTargetIndex = morphTargetDictionary[17];
           }
-          if (blinkRightMorphTargetIndex !== undefined  && parseInt((now/1000)) % 10 == 0) {
+          if (blinkRightMorphTargetIndex !== undefined  && parseInt((now/1000)) % 10 == rdmNum) {
             morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
           }
         }

@@ -1810,13 +1810,14 @@ class Avatar {
           if (aaMorphTargetIndex !== void 0) {
             morphTargetInfluences[aaMorphTargetIndex] = aaValue;
           }
+          const rdmNum = Math.floor(Math.random() * 5);
           const blinkLeftMorphTest = /.*blink_*l(?:eft)*/i;
           const blinkLeftMorphTarget = Object.keys(morphTargetDictionary).filter((key) => blinkLeftMorphTest.test(key));
           let blinkLeftMorphTargetIndex = morphTargetDictionary[blinkLeftMorphTarget];
           if (blinkLeftMorphTargetIndex === void 0) {
             blinkLeftMorphTargetIndex = morphTargetDictionary[16];
           }
-          if (blinkLeftMorphTargetIndex !== void 0 && parseInt(now / 1e3) % 10 == 0) {
+          if (blinkLeftMorphTargetIndex !== void 0 && parseInt(now / 1e3) % 10 == rdmNum) {
             morphTargetInfluences[blinkLeftMorphTargetIndex] = blinkValue;
           }
           const blinkRightMorphTest = /.*blink_*r(?:ight)*/i;
@@ -1825,7 +1826,7 @@ class Avatar {
           if (blinkRightMorphTargetIndex === void 0) {
             blinkRightMorphTargetIndex = morphTargetDictionary[17];
           }
-          if (blinkRightMorphTargetIndex !== void 0 && parseInt(now / 1e3) % 10 == 0) {
+          if (blinkRightMorphTargetIndex !== void 0 && parseInt(now / 1e3) % 10 == rdmNum) {
             morphTargetInfluences[blinkRightMorphTargetIndex] = blinkValue;
           }
         }
