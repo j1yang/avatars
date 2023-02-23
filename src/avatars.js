@@ -967,9 +967,15 @@ class Avatar {
             if (k === 'thumb') {//thumb
               setter = (q, i) => q.setFromAxisAngle(localVector.set(0, left ? 1 : -1, 0), gamepadInput.grip * Math.PI*(i === 0 ? 0.007 : 0.12));//0.125 : 0.25
             } else if (k === 'index') {//index
-              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, left ? -0.4 : 0.4, left ? -0.6 : 0.6), gamepadInput.pointer * Math.PI*0.3);
-            } else {//midle, ring, little
-              setter = (q, i) => q.setFromAxisAngle(localVector.set(-0.15, left ? -0.4 : 0.4, left ? -0.9 : 0.9), gamepadInput.grip * Math.PI*0.35);
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(0, left ? -0.5 : 0.55, left ? -0.6 : 0.6), gamepadInput.pointer * Math.PI*0.3);//0.3
+            } else if (k === 'middle'){//middle
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(-0.12, left ? -0.55 : 0.55, left ? -0.9 : 0.9), gamepadInput.grip * Math.PI*0.35);//0.35
+            }
+            else if (k === 'ring'){//ring
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(-0.3, left ? -0.55 : 0.55, left ? -0.9 : 0.9), gamepadInput.grip * Math.PI*0.35);//0.35
+            }
+            else if (k === 'little'){//little
+              setter = (q, i) => q.setFromAxisAngle(localVector.set(-0.38, left ? -0.5 : 0.5, left ? -0.8 : 0.8), gamepadInput.grip * Math.PI*0.35);//0.35
             }
             let index = 0;
             fingerBone.traverse(subFingerBone => {
